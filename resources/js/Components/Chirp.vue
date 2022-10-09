@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Dropdown from '@/Components/Dropdown.vue';
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -11,13 +11,28 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 
 dayjs.extend(relativeTime);
 
-const props = defineProps(['chirp']);
+// const props = defineProps(['chirp']);
+
+const props = defineProps<{
+  chirp: {
+    id: number;
+    user: {
+      id: number;
+      name: string;
+    };
+    message: string;
+    created_at: string;
+    updated_at:string;
+  };
+}>();
 
 const form = useForm({
   message: props.chirp.message,
 });
 
 const editing = ref(false);
+
+
 </script>
 
 <template>
