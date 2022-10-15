@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chirp;
+use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -20,6 +21,7 @@ class ChirpController extends Controller
      */
     public function index(): Response
     {
+
         return Inertia::render('Chirps/Index', [
             'chirps' => Chirp::with('user:id,name')->latest()->get(),
         ]);
@@ -39,14 +41,13 @@ class ChirpController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Application|Redirector|RedirectResponse
      */
     public function store(Request $request)
     {
         $validated = $request->validate([
             'message' => 'required|string|max:255',
         ]);
-
         $request->user()->chirps()->create($validated);
 
         return redirect(route('chirps.index'));
