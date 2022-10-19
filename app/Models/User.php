@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -19,7 +20,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Chirp[] $chirps
+ * @property-read \Illuminate\Database\Eloquent\Collection|Chirp[] $chirps
  * @property-read int|null $chirps_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
@@ -75,10 +76,10 @@ class User extends Authenticatable
 
     /**
      * Get the chirps for the user.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     * @psalm-return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Chirp>
+     * @return HasMany
+     * @psalm-return HasMany<Chirp>
      */
-    public function chirps()
+    public function chirps(): HasMany
     {
         return $this->hasMany(Chirp::class);
     }
